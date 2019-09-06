@@ -1,0 +1,721 @@
+\documentclass[12pt]{article}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{empheq}
+\usepackage{pifont}
+\usepackage{stmaryrd}
+\usepackage{marvosym}
+\usepackage{qtree}
+\usepackage{makeidx}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{bbm}
+%\usepackage{flexisym}
+\usepackage{amsmath}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=15mm,
+ right=15mm,
+ top=20mm,
+ bottom=20mm
+ }
+
+
+\usepackage[linesnumbered,ruled,vlined,spanish,onelanguage]{algorithm2e}
+
+\theoremstyle{plain}
+
+\theoremstyle{definition}
+\newtheorem*{theorem*}{Teorema}
+\theoremstyle{definition}
+\newtheorem{theorem}{Teorema}
+\theoremstyle{definition}
+\newtheorem*{solution}{Solución}
+
+\usepackage{amssymb, enumerate}
+\usepackage{amscd, textcomp}
+
+
+
+
+\usetikzlibrary{trees}
+\pagestyle{fancy}
+
+
+\usepackage{lmodern}
+
+
+% Command "alignedbox{}{}" for a box within an align environment
+% Source: http://www.latex-community.org/forum/viewtopic.php?f=46&t=8144
+\newlength\dlf  % Define a new measure, dlf
+\newcommand\alignedbox[2]{
+% Argument #1 = before & if there were no box (lhs)
+% Argument #2 = after & if there were no box (rhs)
+&  % Alignment sign of the line
+{
+\settowidth\dlf{$\displaystyle #1$}  
+    % The width of \dlf is the width of the lhs, with a displaystyle font
+\addtolength\dlf{\fboxsep+\fboxrule}  
+    % Add to it the distance to the box, and the width of the line of the box
+\hspace{-\dlf}  
+    % Move everything dlf units to the left, so t
+\boxed{#1 #2}
+    % box around lhs and rhs
+}
+}
+
+
+\lhead{Juan S. Corredor - Adriana Nivia - Diana Mateus}
+\chead{}
+\rhead{Taller No. 2 - Modelos lineales}
+
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Hom}{\operatorname{Hom}}
+\DeclareMathOperator{\Der}{\operatorname{Der}}
+\DeclareMathOperator{\GL}{\operatorname{GL}}
+\DeclareMathOperator{\SL}{\operatorname{SL}}
+\DeclareMathOperator{\SO}{\operatorname{SO}}
+\DeclareMathOperator{\Ort}{\operatorname{O}}
+\newcommand{\ca}{\mathtt{c}}
+\DeclareMathOperator{\Tr}{\operatorname{Tr}}
+\newcommand{\id}{\mathrm{I}}
+\DeclareMathOperator{\ad}{\mathtt{ad}}
+\newcommand{\Id}{\mathrm{Id}}
+\newcommand{\pr}{\mathtt{pr}}
+\newcommand\dual[1]{{#1}^{\vee}}
+\newcommand{\trace}{tr}
+\newcommand{\Ker}{\text{Ker}}
+\newcommand{\p}{\text{.}}
+\newcommand{\prob}{\text{Pr}}
+\newcommand{\re}{\text{rep}}
+\newcommand{\var}{\text{Var}}
+\newcommand{\ra}{R_C}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Order}{\mathcal{O}}
+\newcommand{\C}{\mathcal{C}}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\cov}{Cov}
+
+\newenvironment{miscases}
+  {\left.\begin{aligned}}
+  {\end{aligned}\right\rbrace}
+
+\begin{document}
+
+\noindent \textbf{Problema 1.} Ejercicio presentado en clase. Se tiene que $y_1$, $y_2$ y $y_3$ son las medidas de los ángulos de un triángulo. La información se presenta como un modelo lineal $y_i=\theta_i + \epsilon_i $, donde $\theta_i$ son los verdaderos ángulos.\\
+\\
+Asuma que $E[\epsilon_i]=0$ y $var[\epsilon_i]=\sigma^2$. Obtenga el estimador de mínimos cuadrados de $\theta$ sujeto a $\sum_i \theta_i = 180^{o}$. 
+\begin{solution}
+La forma matricial del modelo esta dada por
+
+\begin{align*}
+ \begin{bmatrix}
+     y_1 \\
+    y_2 \\
+   y_3 \\
+\end{bmatrix} = \begin{bmatrix}
+     1 & 0 & 0 \\
+    0 & 1 & 0 \\
+  0 & 0 & 1 \\
+\end{bmatrix} \begin{bmatrix}
+     \theta_1 \\
+    \theta_2 \\
+   \theta_3 \\
+\end{bmatrix} + \begin{bmatrix}
+     \epsilon_1 \\
+    \epsilon_2 \\
+   \epsilon_3 \\
+\end{bmatrix}
+\end{align*}
+
+El estimador de mínimos cuadrados del modelo esta dado por
+\begin{align*}
+  \hat{\theta} &= (X^TX)^-X^TY\\
+  &= \left[ \begin{bmatrix}
+     1 & 0 & 0 \\
+    0 & 1 & 0 \\
+  0 & 0 & 1 \\
+\end{bmatrix}\begin{bmatrix}
+     1 & 0 & 0 \\
+    0 & 1 & 0 \\
+  0 & 0 & 1 \\
+\end{bmatrix}\right]^{-1}\begin{bmatrix}
+     1 & 0 & 0 \\
+    0 & 1 & 0 \\
+  0 & 0 & 1 \\
+\end{bmatrix} \begin{bmatrix}
+     y_1 \\
+    y_2 \\
+   y_3 \\
+\end{bmatrix}\\
+&= \begin{bmatrix}
+     1 & 0 & 0 \\
+    0 & 1 & 0 \\
+  0 & 0 & 1 \\
+\end{bmatrix}\begin{bmatrix}
+     1 & 0 & 0 \\
+    0 & 1 & 0 \\
+  0 & 0 & 1 \\
+\end{bmatrix}\begin{bmatrix}
+     y_1 \\
+    y_2 \\
+   y_3 \\
+\end{bmatrix}\\
+  & = \begin{bmatrix}
+     y_1 \\
+    y_2 \\
+   y_3 \\
+\end{bmatrix}
+\end{align*}
+
+Finalmente, el estimador del modelo restringido:
+
+\begin{align*}
+\theta^{o}_{r} &= \hat{\theta}-G\Lambda^T(\Lambda G \Lambda^T)^{-1}(\Lambda \hat{\theta} - d)\\
+&= Y - I_31_3(1^{T}_{3}I_31_3)^{-1}(1^{T}_{3}Y-180^o)\\
+&= Y-1_3(3)^{-1}\left[\sum^{3}_{i=1}y_i - 180^o\right]\\
+&= Y-1_3(\bar{y} - 60^o)\\
+&=\begin{bmatrix}
+     y_1 \\
+    y_2 \\
+   y_3 \\
+\end{bmatrix} - \begin{bmatrix}
+     \bar{y} - 60^o\\
+  \bar{y} - 60^o \\
+   \bar{y} - 60^o \\
+\end{bmatrix}
+\end{align*}
+\end{solution}
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+\newpage
+\noindent \textbf{Problema 2.} Ejercicio 7.3 de \cite{ravishanker2001first}
+Sea $y_i=\beta_0+\beta_1 x_{i1} + ... + \beta_5 x_{i5} + \epsilon_i$, con $i = 1, 2, ..., N$ y $\epsilon \sim N(0,\sigma^2)$. Derive la estadística F para probar $H_0:\beta_3 = \beta_4 = \beta_5 = 0 $. ¿Cambia esta prueba estadística si en lugar de las respuestas originales $y_i$ se utiliza como respuesta $y_i-\bar{y}$?
+
+
+\begin{solution}
+La forma matricial del modelo esta dada por
+\begin{align*}
+\begin{bmatrix}
+    y_1\\
+ y_2\\
+   \vdots \\
+   y_N
+\end{bmatrix}=\begin{bmatrix}
+    1 & x_{11}& x_{12}& x_{13}& x_{14}& x_{15}\\
+1 & x_{21}& x_{22}& x_{23}& x_{24}& x_{25}\\
+   \vdots& \vdots & \vdots & \vdots & \vdots \\
+  1 & x_{N1}& x_{N2}& x_{N3}& x_{N4}& x_{N5}
+\end{bmatrix}\begin{bmatrix}
+    \beta_0\\
+\beta_1\\
+   \beta_2 \\
+  \beta_3\\
+  \beta_4\\
+  \beta_5
+\end{bmatrix}+\begin{bmatrix}
+    \epsilon_1\\
+\epsilon_2\\
+    \vdots \\
+  \epsilon_N
+\end{bmatrix}
+\end{align*}
+
+La hipótesis a probar es 
+\begin{align*}
+H_0:\beta_3 = \beta_4 = \beta_5 = 0, 
+\end{align*}
+la cual en términos de la hipótesis lineal general esta dada por
+\begin{align*}
+H_0:\Lambda\beta = \delta, 
+\end{align*}
+donde 
+
+\begin{align*}
+\Lambda\beta =\begin{bmatrix}
+0&0&0&1&0&0\\
+0&0&0&0&1&0\\
+0&0&0&0&0&1
+\end{bmatrix}\begin{bmatrix}
+\beta_0\\
+\beta_1\\
+\beta_2\\
+\beta_3\\
+\beta_4\\
+\beta_5
+\end{bmatrix} \ \ \ \ \ 
+\delta =\begin{bmatrix}
+0\\
+0\\
+0
+\end{bmatrix}
+\end{align*}
+donde también
+\begin{align*}
+\hat{\beta} =(X^TX)^-X^TY=GX^TY.
+\end{align*}
+Para construir la estadística F se tiene que
+\begin{align*}
+SCH_0&= (\Lambda\hat{\beta}-\delta)^T(\Lambda G \Lambda^T)^{-1}(\Lambda\hat{\beta}-\delta)\\
+&= (\Lambda GX^TY)^T(\Lambda G \Lambda^T)^{-1}(\Lambda GX^TY)
+\end{align*}
+y además
+\begin{align*}
+SCE &= SCT - SCR\\
+&= Y^TY - \hat{\beta}^TX^TY\\
+&=Y^TY - Y^TXGX^TY
+\end{align*}
+
+Finalmente, como $\text{rango}
+(\Lambda)=3$ y $N-r=N-6$, entonces el estadístico $F_c$ esta dado por
+
+\begin{align*}
+F_c &= \frac{SCH_0/3}{SCE/(N-6)} \sim F_{(3, N-6)}\\
+F_c &=  \frac{[ (\Lambda GX^TY)^T(\Lambda G \Lambda^T)^{-1}(\Lambda GX^TY)]/3}{(Y^TY - Y^TXGX^TY)/(N-6)} \sim F_{(3, N-6)}
+\end{align*}
+La hipótesis nula se rechaza a un nivel de significancia de $\alpha$ si:
+\begin{align*}
+F_c > F_{(3,N-6)}.
+\end{align*}
+Si se cambia $y_i$ por $y_i-\bar{y}$ la prueba estadística cambia únicamente en los valores que se introducen en el estadístico de prueba, pues los cambios se observan en los valores de la variable respuesta, se cambia $Y$ po $Y^*=Y-\bar{Y}$. Sin embargo la distribución del estadístico de prueba permanece igual ya que los supuestos de normalidad sobre los errores y el diseño del modelo no se cambian.  
+\end{solution}
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+\noindent \textbf{Problema 3.} Ejercicio 7.4 de \cite{ravishanker2001first} Considere las mediciones de los errores en el ejercicio 4.3 asumiendo que son independientes e idénticamente distribuidas con  $\epsilon\sim N(0,\sigma^{2})$, obtenga la distribución del estimador por mínimos cuadrados para la fuerza desconocida $\theta$, y el intervalo de confianza a un nivel $(1-\alpha)$ para $\theta$.\\ 
+\begin{solution}
+Bajo el modelo  $y_i=\dfrac{t^2\theta}{2}+\epsilon_i$, la estimación de $\theta$ por MCO, esta dada por:
+\begin{align*}
+    S &=\sum^{n}_{i=1} \epsilon_i^2\\ &= \sum_{i=1}^{n} \left( y_i - \frac{t^{2}_{i}}{2}\theta \right)^2 \\
+    &= \sum_{i=1}^{n} \left(y_{i}^{2}-y_i t_{i}^{2}\theta+\frac{t_{i}^4}{4}\theta^2 \right)\\ &= \sum_{i=1}^{n} y_i^2 -\theta\sum_{i=1}^{n} y_i t_{i}^{2}+\frac{\theta^2}{4}\sum_{i=1}^{n}t_{i}^{4}
+\end{align*}
+y derivando la expresión anterior respecto a  $\theta$ se obtiene que
+$$\frac{\partial S}{\partial\theta}= - \sum y_{i}t^2+\frac{\hat{\theta}}{2}\sum_{i=1}^{n}t_{i}^4=0$$
+Ahora, se procede a despejar $\hat{\theta}$:
+$$\frac{\hat{\theta}}{2}\sum_{i=1}^{n}t_{i}^4=\sum_{i=1}^{n} y_{i}t^2 \implies
+\hat{\theta}=\dfrac{2\sum_{i=1}^{n}y_{i}t_{i}^2}{\sum_{i=1}^{n}t_{i}^{4}}$$
+La varianza de $\hat{\theta}$  esta dada por:
+\begin{align*}
+\var(\hat{\theta}) &=\var(\dfrac{2\sum_{i=1}^{n}y_{i}t_{i}^2}{\sum_{i=1}^{n}t_{i}^{4}}) \\
+&=4\dfrac{\var(\sum_{i=1}^{n}y_{i}t_{i}^2)}{(\sum_{i=1}^{n}t_{i}^{4})^2}\\ &=4\dfrac{\sum_{i=1}^{n}(t_{i}^2)^2\var(y_{i})}{(\sum_{i=1}^{n}t_{i}^{4})^2} \\
+&=\dfrac{4\sigma^2}{\sum_{i=1}^{n}t_{i}^4}=GX^TXG\sigma
+\end{align*}
+Realizando el procedimiento de estimación de forma matricial, se obtienen los mismos resultados si se tiene en cuenta que $X^TX=\frac{1}{4}\sum_{i=1}^{n}t_{i}^4$ y $X^T Y=\frac{1}{2}\sum_{i=1}^{n}y_{i}t_{i}^2$.\\ \\ 
+Para la distribución de $\hat{\theta}$ se tiene que:\\
+$$\hat{\theta}\sim N\left( \ \theta, \sigma^2\dfrac{4}{\sum_{i=1}^{n}t_{i}^4}\ \right)$$
+Finalmente un intervalo a nivel de $(1-\alpha)$ es de la forma:
+$$\hat{\theta}\pm t_{n-1,\frac{\alpha}{2}}\sqrt{\var(\hat{\theta})}$$
+\end{solution}
+% ------------------------------
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+\noindent \textbf{Problema 4.} Ejercicio 7.5 de \cite{ravishanker2001first}. En el modelo (4.1.7) con $a=3$ 
+\begin{align*}
+Y_{ij} = \mu + \tau_i + \epsilon_{ij},\ j = 1, ..., n_i , \ i = 1, 2, 3
+\end{align*}
+tal que
+\begin{align*}
+\epsilon_{ij}\sim N(0, \sigma^2)
+\end{align*}
+son independientes e idénticamente distribuidos. Derive una prueba para $H: \mu + \tau_1 = \mu + \tau_2 = \mu + \tau_3$. Caracterice la función de potencia de esta prueba. 
+\begin{solution}
+Probar $H: \mu + \tau_1 = \mu + \tau_2 = \mu + \tau_3$ es equivalente a probar
+\begin{align*}
+H &:\tau_1 = \tau_2 = \tau_3\\
+H &:\tau_1 - \tau_3 =\tau_2-\tau_3 = 0
+\end{align*}
+Así, la hipótesis esta dada por  
+\begin{align*}
+H_0: \Lambda\beta = \delta
+\end{align*}
+donde 
+\begin{align*}
+\Lambda\beta =\begin{bmatrix}
+0&1&0&-1\\
+0&0&1&-1
+\end{bmatrix}\begin{bmatrix}
+\mu\\
+\tau_1\\
+\tau_2\\
+\tau_3
+\end{bmatrix} \ \ \ \ \
+\delta =\begin{bmatrix}
+0\\
+0
+\end{bmatrix}
+\end{align*}
+Ahora, la forma matricial del modelo esta dada por
+\begin{align*}
+    \beta = \begin{bmatrix}
+       \mu \\ \tau_1 \\ \tau_2 \\ \tau_3
+    \end{bmatrix} \hspace{1cm}
+    Y &= \begin{bmatrix}
+       Y_{11} \\ \vdots \\ Y_{1n_1} \\ 
+       Y_{21} \\ \vdots \\ Y_{2n_2}\\
+       Y_{31} \\ \vdots \\ Y_{3n_3}
+    \end{bmatrix} \hspace{1cm}
+    \epsilon = \begin{bmatrix}
+       \epsilon_{11} \\ \vdots \\ \epsilon_{1n_1} \\ \epsilon_{21} \\ \vdots \\ \epsilon_{2n_2} \\
+       \epsilon_{31} \\ \vdots \\ \epsilon_{3n_3}
+    \end{bmatrix} \\
+    \\
+    X &= \begin{bmatrix}
+       \vdots & \Vec{1}_{n_1} & 0 &  0 \\
+       \Vec{1}_N & 0 & \Vec{1}_{n_2} &  0 \\
+       \vdots & 0 & 0 & \Vec{1}_{n_3} \\
+    \end{bmatrix} \\
+\end{align*}
+Primero empecemos por notar que la matriz $X$ tiene rango $3$ debido a que la primera columna es igual a la suma de las restantes tres. De esta forma se tiene que $r=3$. Lo siguiente es ver que la hipótesis es probable:
+\begin{align*}
+H &= (X^TX)^-\:X^TX\\
+&=\left\{\begin{bmatrix}
+N   & n_1 & n_2 & n_3 \\
+n_1 & n_1 & 0   & 0   \\
+n_2 & 0   & n_2 & 0   \\
+n_3 & 0   & 0   & n_3
+\end{bmatrix}\right\}^- \hspace{0.35cm} \begin{bmatrix}
+N   & n_1 & n_2 & n_3 \\
+n_1 & n_1 & 0   & 0   \\
+n_2 & 0   & n_2 & 0   \\
+n_3 & 0   & 0   & n_3
+\end{bmatrix}\\
+&= \begin{bmatrix}
+0 & 0 & 0 & 0        \\
+0 & 1/n_1 & 0 & 0 \\
+0 & 0 & 1/n_2 & 0 \\
+0 & 0 & 0 & 1/n_3 
+\end{bmatrix} \: \: \begin{bmatrix}
+N   & n_1 & n_2 & n_3 \\
+n_1 & n_1 & 0   & 0   \\
+n_2 & 0   & n_2 & 0   \\
+n_3 & 0   & 0   & n_3
+\end{bmatrix}\\
+&=\begin{bmatrix}0&0&0&0\\
+1&1&0&0\\
+1&0&1&0\\
+1&0&0&1
+\end{bmatrix}
+\end{align*}
+Ahora se observa que
+\begin{align*}
+\Lambda \ H =
+\begin{bmatrix}
+0&1&0&-1\\
+0&0&1&-1
+\end{bmatrix}\begin{bmatrix}0&0&0&0\\
+1&1&0&0\\
+1&0&1&0\\
+1&0&0&1
+\end{bmatrix}
+=\begin{bmatrix}
+0&1&0&-1\\
+0&0&1&-1
+\end{bmatrix} = \Lambda
+\end{align*}
+Con lo que se prueba que $\Lambda$ es probable. Ahora se calcula $SCH_0$:Se tiene que 
+
+\begin{align*}
+\hat{\beta}&= (X^TX)^-\ X^TY\\
+&= \begin{bmatrix}
+0 & 0 & 0 & 0 \\
+0 & 1/n_1 & 0 & 0 \\
+0 & 0 & 1/n_2 & 0 \\
+0 & 0 & 0 & 1/n_3
+\end{bmatrix}\ \begin{bmatrix}
+\sum^{n_1}_{j=1}Y_{1j} + \sum^{n_2}_{j=1}Y_{2j} + \sum^{n_3}_{j=1}Y_{3j} \\
+\sum^{n_1}_{j=1}Y_{1j} \\
+\sum^{n_2}_{j=1}Y_{2j} \\
+\sum^{n_3}_{j=1}Y_{3j}
+\end{bmatrix} \\
+&=\begin{bmatrix}
+0 \\
+(1/n_1) \ \sum^{n_1}_{j=1}Y_{1j} \\
+(1/n_2) \ \sum^{n_2}_{j=1}Y_{2j} \\
+(1/n_3) \ \sum^{n_3}_{j=1}Y_{3j}
+\end{bmatrix} =
+\begin{bmatrix}
+0 \\
+\bar{Y}_1 \\
+\bar{Y}_2 \\
+\bar{Y}_3
+\end{bmatrix}
+\end{align*}
+Así, se tiene que
+\begin{align*}
+\Lambda\hat{\beta}&= \begin{bmatrix}
+0&1&0&-1\\
+0&0&1&-1
+\end{bmatrix}\ 
+\begin{bmatrix}
+0\\
+\bar{Y}_1\\
+\bar{Y}_2\\
+\bar{Y}_3
+\end{bmatrix}
+=\begin{bmatrix}
+\bar{Y}_1-\bar{Y}_3 \\
+\bar{Y}_2-\bar{Y}_3
+\end{bmatrix}
+\end{align*}
+Por otro lado
+\begin{align*}
+\Lambda G \Lambda^T &=  \begin{bmatrix}
+0&1&0&-1\\
+0&0&1&-1
+\end{bmatrix} \ \begin{bmatrix}
+0 & 0 & 0 & 0\\
+0 & 1/n_1 & 0 & 0\\
+0 & 0 & 1/n_2 & 0\\
+0 & 0 & 0 & 1/n_3
+\end{bmatrix}  \ \begin{bmatrix}
+\hspace{0.325cm}0 & \hspace{0.325cm}0 \\
+\hspace{0.325cm}1 & \hspace{0.325cm}0 \\
+\hspace{0.325cm}0 & \hspace{0.325cm}1 \\
+-1 & -1
+\end{bmatrix}\\
+&=\begin{bmatrix}
+1/n_1 + 1/n_3 & 1/n_3\\
+1/n_3 & 1/n_2 + 1/n_3
+\end{bmatrix}
+\end{align*}
+y usando el hecho de que 
+\begin{align*}
+    \det(\Lambda G \Lambda^T) = \frac{n_1+n_2+n_3}{n_1n_2n_3}
+\end{align*}
+se obtiene
+\begin{align*}
+(\Lambda G \Lambda^T)^{-1} &= \frac{n_1n_2n_3}{n_1+n_2+n_3}\begin{bmatrix}
+1/n_2 + 1/n_3 & -1/n_3\\
+-1/n_3 & 1/n_1 + 1/n_3
+\end{bmatrix} \\
+&= \frac{1}{n_1+n_2+n_3}\begin{bmatrix}
+n_1n_2 + n_1n_3 & -n_1n_2\\
+-n_1n_2 & n_1n_2 + n_2n_3
+\end{bmatrix}
+\end{align*}
+Y se procede a calcular
+\begin{align*}
+Q = SCH_0 &= (\Lambda\hat\beta)^T\ (\Lambda G \Lambda^T)^{-1} \ (\Lambda\hat\beta)\\
+&=\frac{1}{n_1+n_2+n_3} \ \Bigg\{\: n_2n_3\ (\bar{Y}_2-\bar{Y}_3)^2 + n_1n_3\
+(\bar{Y}_1-\bar{Y}_3)^2 + n_1n_2\ (\bar{Y}_1-\bar{Y}_2)^2 \:\Bigg\}
+\end{align*}
+Por ultimo se tiene que $SCE=SCT-SCR(\beta)$, donde
+\begin{align*}
+SCR(\beta) &= \hat Y^T  Y = (X \hat\beta)^T\ Y =\hat{\beta}^TX^TY\\
+&= \begin{bmatrix}
+0 & \bar{Y}_1 & \bar{Y}_2 & \bar{Y}_3
+\end{bmatrix}\ \begin{bmatrix}
+\sum^{n_1}_{j=1}Y_{1j} + \sum^{n_2}_{j=1}Y_{2j} + \sum^{n_3}_{j=1}Y_{3j} \\
+\sum^{n_1}_{j=1}Y_{1j} \\
+\sum^{n_2}_{j=1}Y_{2j} \\
+\sum^{n_3}_{j=1}Y_{3j}
+\end{bmatrix}\\
+&= \begin{bmatrix}
+0 & \bar{Y}_1 & \bar{Y}_2 & \bar{Y}_3
+\end{bmatrix}\ \begin{bmatrix}
+n_1\bar{Y}_1+ n_2\bar{Y}_2 + n_3\bar{Y}_3 \\
+n_1\bar{Y}_1 \\
+n_2\bar{Y}_2 \\
+n_3\bar{Y}_3
+\end{bmatrix} \\ \\ 
+&= n_1\bar{Y}_1^2+ n_2\bar{Y}_2^2 + n_3\bar{Y}_3^2 = \sum_{i=1}^{3} n_i \bar{Y}_i^2 \\  \\
+SCT &= Y^TY = \sum_{i=1}^{3} \sum_{j=1}^{n_i} Y_{ij}^2
+\end{align*}
+Por lo tanto:
+\begin{align*}
+SCE=  \sum_{i=1}^{3} \sum_{j=1}^{n_i} Y_{ij}^2 - \sum_{i=1}^{3} n_i \bar{Y}_i^2  
+\end{align*}
+Con lo que finalmente se obtiene el estadístico deseado
+\begin{align*}
+F(H_0) &= \frac{Q/2}{SCE/(N-3)}\\ \\
+&=  \frac{(N-3) \ \Bigg\{\: n_2n_3\ (\bar{Y}_2-\bar{Y}_3)^2 + n_1n_3\
+(\bar{Y}_1-\bar{Y}_3)^2 + n_1n_2\ (\bar{Y}_1-\bar{Y}_2)^2 \:\Bigg\} }{2 \ (n_1+n_2+n_3) \ \left\{ \sum_{i=1}^{3} \sum_{j=1}^{n_i} Y_{ij}^2 - \sum_{i=1}^{3} n_i \bar{Y}_i^2 \right\} }  \sim F_{2,N-3}
+\end{align*}
+bajo la hipótesis $H_0$. Lo último que queda por hacer es caracterizar la función de potencia para este test, la cual está definida como 
+\begin{align*}
+    P(\lambda) &= P(\ \text{Rechazar $H_0|H_0$ es falso} \ ) \\
+    &= P(\ F(H_0) > F_{2,N-3,\alpha} | \ H \:\text{es falso} \ ) \\
+    &= \int_{F_{2,N-3,\alpha}}^{\infty} g(\xi) d\xi
+\end{align*}
+donde $\xi = F(H_0)$ tiene pdf $g(\xi)$, la cual es conocida y es una $F(2,N-3,\lambda)$ con parámetro de no-centralidad $\lambda$ (el cual varía y es el que da pie a la potencia). Además es pertinente mencionar que $F_{2,N-3,\alpha}$ hace referencia al $\alpha$ cuantil de su respectiva distribución.
+\end{solution}
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+\textbf{Problema 5.} Ejercicio 7.6 de \cite{ravishanker2001first}. En un experimento donde varios tratamientos son comparados con un control, podría ser deseable repetir el control más que los tratamientos experimentales, ya que el control entra en cada diferencia investigada. Suponga que cada uno de los $m$ tratamientos experimentales es repetido $t$ veces mientras que el control es repetido $c$ veces. Sea $Y_{ij}$ la $j$-ésima observación en el tratamiento experimental $i$ con $i=1,\ldots,m$ y $j=1,\ldots,t$ y sea $Y_{0j}$ el $j$-ésimo control con $j=1,\ldots,c$. Asuma que $Y_{ij} = \tau_i + \epsilon_i$ con $i=0,1,\ldots,m$ donde $\epsilon_i$ son iid $N(0,\sigma^2)$. Encuentre la distribución del estimador de mínimos cuadrados de $\theta_i = \tau_i - \tau_0$ con $i = 1, \ldots, m$.
+
+\begin{solution}
+De manera matricial se tiene el modelo lineal 
+\begin{align*}
+    Y &= X \tau + \epsilon \\
+    \\
+    \tau = \begin{bmatrix}
+        \tau_0 \\ \vdots \\ \tau_m
+    \end{bmatrix}\hspace{1cm} Y &= \begin{bmatrix}
+        Y_{01} \\  \vdots \\ Y_{0c} \\ Y_{11} \\ \vdots \\ Y_{mt}
+    \end{bmatrix} \hspace{1cm} \epsilon = \begin{bmatrix}
+        \epsilon_{01} \\  \vdots \\ \epsilon_{0c} \\ \epsilon_{11} \\ \vdots \\ \epsilon_{mt}
+    \end{bmatrix}  \\ \\
+    X &= \begin{bmatrix}
+        \Vec{1}_{c} & 0 & \ldots & \ldots & 0   \\
+        0 & \Vec{1}_{t} & \ddots & \ddots & \vdots  \\
+        \vdots & \ddots  & \ddots & \ddots & \vdots \\
+        \vdots & \ddots  & \ddots & \Vec{1}_{t} & 0 \\
+        0 & \ldots  & \ldots & 0 & \Vec{1}_{t} \\
+     \end{bmatrix}
+\end{align*}
+donde $X$ es de $N \times (m+1)$ con $N = c + tm$. Ahora que recordemos que $Y_{ij}$ son independientes y $Y_{ij} \sim  N( \tau_i , \sigma^2 )$. Ahora encontremos $\hat \tau$: 
+\begin{align*}
+    X^T X &= \begin{bmatrix}
+        c & 0 & \ldots & 0 \\
+        0 & t & \ddots & \vdots \\
+        \vdots & \ddots & \ddots & 0 \\
+        0 & \ldots & 0 & t
+    \end{bmatrix} \\ \\
+    (X^T X)^{-1} &= \begin{bmatrix}
+        c^{-1} & 0 & \ldots & 0 \\
+        0 & t^{-1} & \ddots & \vdots \\
+        \vdots & \ddots & \ddots & 0 \\
+        0 & \ldots & 0 & t^{-1}
+    \end{bmatrix}
+\end{align*}
+y de esta forma se tiene que 
+\begin{align*}
+    \tau &= (X^T X)^{-1} X^T Y  \\
+         &= \begin{bmatrix}
+             \bar{Y}_0 \\ \bar{Y}_1 \\ \vdots \\ \bar{Y}_m
+             \end{bmatrix}
+\end{align*}
+donde se define $\bar{Y}_i =  t^{-1} \ \sum_{j=1}^{t} Y_{ij}$ para $i = 1,\ldots,m$ y $\bar{Y}_0 = c^{-1}\ \sum_{j=1}^{c} Y_{0j}$. Para $i=1,\ldots,m$, se tiene que el estimador de mínimos cuadrados de $\theta_i$ es de la forma
+\begin{align*}
+ \hat{\theta}_i &= \hat{\tau}_i - \hat{\tau}_0 \\
+                &= \bar{Y}_i - \bar{Y}_0
+\end{align*}
+Ahora note que dado que los $Y_{ij}$ son independientes y $Y_{ij} \sim N(\tau_i, \sigma^2)$ se tiene que
+\begin{align*}
+    \bar{Y}_i  &= t^{-1}\ \sum_{j=1}^{t} Y_{ij} \sim N(\tau_i, t^{-1} \ \sigma^2)  \\ \\
+    \bar{Y}_0 &= c^{-1}\ \sum_{j=1}^{c} Y_{0j} \sim N(\tau_0, c^{-1} \ \sigma^2)
+\end{align*}
+y por lo tanto se tiene que 
+\begin{align*}
+    \hat{\theta}_i &=  \bar{Y}_i - \bar{Y}_0 \sim N(\tau_i - \tau_0 \ , \ t^{-1} \ \sigma^2 + c^{-1} \ \sigma^2)
+\end{align*}
+por lo que se concluye que el estimador de mínimos cuadrados para $\theta_i$ tiene como distribución la normal $N(\ \tau_i-\tau_0\ ,\  (c^{-1}+t^{-1})\sigma^2 \ )$. \\
+\\
+\textbf{Importante:} Acá se usó el hecho de que dado que $A \sim N(a,\psi_A^2)$ y $B \sim N(b,\psi_B^2)$  independientes y $r \in \R$ se tiene que $A + rB \sim N(a+rb \ ,\  \psi_A^2 + r^2 \psi_B^2 )$. 
+\end{solution}
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+\newpage
+\noindent \textbf{Problema 6.} Ejercicio 7.8 de \cite{ravishanker2001first}. En el ejercicio 4.5 (elaborado en el anterior taller) asuma que los errores tienen una distribución normal. Construya intervalos del $95\%$ confianza para $\beta_1$, $\beta_2$, $\beta_3$, $\beta_1-\beta_2$ y $\beta_1+\beta_3$.
+\begin{solution}
+Recordemos los aspectos más importantes obtenidos en el ejercicio 4.5:
+\begin{itemize}
+    \item[1.] El rango es $r=3$ y por lo tanto $N-r=10-3=7$.
+    \item[2.] Se tiene que 
+    \begin{align*}
+        (X^TX)^{-1} =  \frac{1}{4} \ \begin{bmatrix}
+    \ \ 11 & -14 & \ \ \ 6 \\
+     -14 & \ \ 20 & \ -8 \\
+    \ \ 6 & \ -8 & \ \ \ 4 \\
+\end{bmatrix}
+        \ \ \
+        \hat{\beta} &= \begin{bmatrix}
+            0 \\ 3 \\ 1
+        \end{bmatrix} \ \ \ 
+        \hat{\sigma}^2 = 4 
+    \end{align*}
+    \item[3.] Se tiene que 
+    \begin{align*}
+    \beta_1 &= \lambda_1 \ \beta \\
+    \beta_2 &= \lambda_2 \ \beta \\
+    \beta_3 &= \lambda_3 \ \beta \\
+    \beta_1 - \beta_2 &= \lambda_4 \ \beta \\
+    \beta_1 + \beta_3 &= \lambda_5 \ \beta \\
+\end{align*}
+donde
+\begin{align*}
+    \lambda_1 = \begin{bmatrix} 1 \\ 0 \\ 0 
+    \end{bmatrix}^T \ \ 
+    \lambda_2 = \begin{bmatrix} 0 \\ 1 \\ 0 
+    \end{bmatrix}^T \ \ 
+    \lambda_3 = \begin{bmatrix} 0 \\ 0 \\ 1 
+    \end{bmatrix}^T \ \ 
+    \lambda_4 = \begin{bmatrix} \ \ 1 \\ -1 \\ \ \ 0 
+    \end{bmatrix}^T \ \ 
+    \lambda_5 = \begin{bmatrix} 1 \\ 0 \\ 1 
+    \end{bmatrix}^T
+\end{align*} 
+y por lo tanto
+\begin{align*}
+    \hat{\beta}_1 &= \lambda_1 \ \hat{\beta} =  0  \\
+    \hat{\beta}_2 &= \lambda_2 \ \hat{\beta} =  3  \\
+    \hat{\beta}_3 &= \lambda_3 \ \hat{\beta} =  1  \\
+    \hat{\beta}_1 - \hat{\beta}_2 &= \lambda_4 \ \hat{\beta} =  -3  \\
+    \hat{\beta}_1 + \hat{\beta}_3 &= \lambda_5 \ \hat{\beta} =  1 
+\end{align*}
+    \item[4.] Además se tiene que $t_{7,0\p025} = 2 \p 365$. 
+\end{itemize}
+Ahora note que para $\lambda \beta$ se tiene que $E(\lambda \hat \beta) = \lambda \beta$ y además 
+\begin{align*}
+    \var(\lambda \hat \beta)  &= \lambda \ (X^TX)^{-1}  \ \lambda^T  \sigma^2 \\
+\end{align*}
+Por lo que el intervalo de $95\%$ confianza para $\lambda \beta$ es $\lambda\hat \beta \pm 2\p365 \sqrt{\var \lambda\hat \beta}$. Por lo tanto, solo queda por hacer los cálculos para cada uno de los estimadores deseados.
+\begin{itemize}
+    \item[1.] IC para $\beta_1$. Note que solo queda por calcular $\var \lambda_1 \hat \beta$: 
+    \begin{align*}
+        \var \lambda_1 \hat \beta &= \lambda_1 (X^TX)^{-1} \lambda_1 \hat{\sigma}^2 = 11
+    \end{align*}
+    Y por lo tanto se tiene que el intervalo de confianza para $\beta_1$ es igual $0 \pm 2\p365 \ \sqrt{11}$.
+    \item[2.] IC para $\beta_2$. Note que solo queda por calcular $\var \lambda_2 \hat \beta$: 
+    \begin{align*}
+        \var \lambda_2 \hat \beta &= \lambda_2 (X^TX)^{-1} \lambda_2 \hat{\sigma}^2 = 20
+    \end{align*}
+    Y por lo tanto se tiene que el intervalo de confianza para $\beta_2$ es igual $3 \pm 2\p365 \ \sqrt{20}$.
+    \item[3.] IC para $\beta_3$. Note que solo queda por calcular $\var \lambda_3 \hat \beta$: 
+    \begin{align*}
+        \var \lambda_3 \hat \beta &= \lambda_3 (X^TX)^{-1} \lambda_3 \hat{\sigma}^2 = 4
+    \end{align*}
+    Y por lo tanto se tiene que el intervalo de confianza para $\beta_3$ es igual $1 \pm 2\p365 \ \sqrt{4}$.
+    \item[4.] IC para $\beta_1-\beta_2$. Note que solo queda por calcular $\var \lambda_4 \hat \beta$: 
+    \begin{align*}
+        \var \lambda_4 \hat \beta &= \lambda_4 (X^TX)^{-1} \lambda_4 \hat{\sigma}^2 = 59
+    \end{align*}
+    Y por lo tanto se tiene que el intervalo de confianza para $\beta_1 - \beta_2$ es igual $-3 \pm 2\p365 \ \sqrt{59}$.
+    \item[5.] IC para $\beta_1+\beta_3$. Note que solo queda por calcular $\var \lambda_5 \hat \beta$: 
+    \begin{align*}
+        \var \lambda_5 \hat \beta &= \lambda_5 (X^TX)^{-1} \lambda_5 \hat{\sigma}^2 = 27
+    \end{align*}
+    Y por lo tanto se tiene que el intervalo de confianza para $\beta_1 + \beta_3$ es igual $1 \pm 2\p365 \ \sqrt{27}$.    
+\end{itemize}
+\end{solution}
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+
+
+\bibliographystyle{apalike}
+\bibliography{References.bib}
+   
+\end{document}
