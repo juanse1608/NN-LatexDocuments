@@ -148,9 +148,19 @@ As a matter of computational time, \cite{6909619} proposes a Multiresolution Arc
     \item[1.] Context Stream: Learns with low-resolution frames.
     \item[2.] Fovea Stream: Learns with high-resolution frames  on the middle portion of the frame.
 \end{itemize}
-
-\subsection*{Results and conclusions of the article}
-\noindent
+In a brief way, this was the use of NNs to solve the problems mentioned above. 
+\subsection*{Results of the article}
+\noindent \cite{6909619} obtained the following main results:
+\begin{itemize}
+    \item[1.] Multiresolution Single Frame CNN Accuracy: $60.0\%$.
+    \item[2.] Early Fusion CNN Accuracy: $57.7\%$.
+    \item[3.] Late Fusion CNN Accuracy: $59.3\%$.
+    \item[4.] Slow Fusion CNN Accuracy: $60.9\%$.
+    \item[5.] CNN Average (Multi + Early + Late + Slow): $63.9\%$.
+    \item[6.] Feature Based Approach: $55.3\%$.
+\end{itemize}
+Note that the average of all CNNs used achieves a significant improvement ($55.3\%$ to $63.9\%$) with respect to the feature based approach. On the other hand, single frame CNN have almost the same accuracy that the better the fusion method (slow fusion).\\
+\\ As a matter of fact, in terms of \textit{transfer learning}, works better, after a process of fine tuning (as minimum) the top $3$ layers, that feature based approach ($59.0\%$ to $65.4\%$) on another known sports dataset: UCF-101.
 
 %Code for doing problem-solution points
 %\noindent \textbf{Problem 1.} 
