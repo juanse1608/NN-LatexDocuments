@@ -1,0 +1,384 @@
+\documentclass[12pt]{article}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{empheq}
+\usepackage{pifont}
+\usepackage{stmaryrd}
+\usepackage{marvosym}
+\usepackage{qtree}
+\usepackage{makeidx}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{bbm}
+%\usepackage{flexisym}
+\usepackage{amsmath}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=15mm,
+ right=15mm,
+ top=20mm,
+ bottom=20mm
+ }
+
+\usepackage[linesnumbered,ruled,vlined,spanish,onelanguage]{algorithm2e}
+
+\theoremstyle{plain}
+
+\theoremstyle{definition}
+\newtheorem*{theorem*}{Teorema}
+\theoremstyle{definition}
+\newtheorem{theorem}{Teorema}
+\theoremstyle{definition}
+\newtheorem*{solution}{Solución}
+
+\usepackage{amssymb, enumerate}
+\usepackage{amscd, textcomp}
+
+
+
+
+\usetikzlibrary{trees}
+\pagestyle{fancy}
+
+
+\usepackage{lmodern}
+
+
+% Command "alignedbox{}{}" for a box within an align environment
+% Source: http://www.latex-community.org/forum/viewtopic.php?f=46&t=8144
+\newlength\dlf  % Define a new measure, dlf
+\newcommand\alignedbox[2]{
+% Argument #1 = before & if there were no box (lhs)
+% Argument #2 = after & if there were no box (rhs)
+&  % Alignment sign of the line
+{
+\settowidth\dlf{$\displaystyle #1$}  
+    % The width of \dlf is the width of the lhs, with a displaystyle font
+\addtolength\dlf{\fboxsep+\fboxrule}  
+    % Add to it the distance to the box, and the width of the line of the box
+\hspace{-\dlf}  
+    % Move everything dlf units to the left, so t
+\boxed{#1 #2}
+    % box around lhs and rhs
+}
+}
+
+
+\lhead{\href{https://github.com/juanse1608}{Juan Sebastián Corredor} %Rodriguez
+- jucorredorr@unal.edu.co\\
+Iván Yesid Castellanos %Castellanos
+- iycastellanosm@unal.edu.co}
+\chead{}
+\rhead{
+Homework No.2 - Neural Networks\\
+Camilo Pino
+- capinog@unal.edu.co
+}
+
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Hom}{\operatorname{Hom}}
+\DeclareMathOperator{\Der}{\operatorname{Der}}
+\DeclareMathOperator{\GL}{\operatorname{GL}}
+\DeclareMathOperator{\SL}{\operatorname{SL}}
+\DeclareMathOperator{\SO}{\operatorname{SO}}
+\DeclareMathOperator{\Ort}{\operatorname{O}}
+\newcommand{\ca}{\mathtt{c}}
+\DeclareMathOperator{\Tr}{\operatorname{Tr}}
+\newcommand{\id}{\mathrm{I}}
+\DeclareMathOperator{\ad}{\mathtt{ad}}
+\newcommand{\Id}{\mathrm{Id}}
+\newcommand{\pr}{\mathtt{pr}}
+\newcommand\dual[1]{{#1}^{\vee}}
+\newcommand{\trace}{tr}
+\newcommand{\Ker}{\text{Ker}}
+\newcommand{\p}{\text{.}}
+\newcommand{\prob}{\text{Pr}}
+\newcommand{\re}{\text{rep}}
+\newcommand{\var}{\text{Var}}
+\newcommand{\ra}{R_C}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Order}{\mathcal{O}}
+\newcommand{\C}{\mathcal{C}}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\cov}{Cov}
+
+\newenvironment{miscases}
+  {\left.\begin{aligned}}
+  {\end{aligned}\right\rbrace}
+
+\begin{document}
+
+%Code for doing problem-solution points
+\noindent \textbf{Problema 1.} Los perceptrones simples se pueden usar para resolver problemas linealmente separables. ¿Cuál es la estrategia que se usó para ampliar sus capacidades para poder resolver problemas de clasificación no lineales?
+\begin{solution}
+\noindent Para resolver un problema cuya separación sea no-lineal se deben añadir capas adicionales entre la entrada y la salida del perceptrón. Según \cite{basheer2000artificial}, la adición de estas capas hace que el perceptrón sea capaz de captar patrones más complejos (no-lineales). A estas capas se les llama `hidden layers' y a estos perceptrones se les conoce `multilayer perceptron'.  
+\end{solution}
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+
+\noindent \textbf{Problema 2.} ¿A qué se refiere el artículo como `backpropagation networks' y cuál es su relación con los perceptrones simples y su algoritmo de aprendizaje?
+\begin{solution}
+\noindent \cite{basheer2000artificial} explica que las redes neuronales de retropropagación son un tipo de perceptrones multicapa entrenados por la regla delta de aprendizaje. Su relación con el perceptrón es el algoritmo de aprendizaje de la retropropagación (regla delta) es una extensión del algoritmo de este mismo. 
+\end{solution}
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+
+\noindent \textbf{Problema 3.} Describa a que se refiere el artículo como learning (aprendizaje) en una red neuronal.
+
+\begin{solution}
+En una red neuronal el proceso de aprendizaje corresponde al proceso de actualizar la representación interna del sistema a partir de estímulos externos, esperando que la red responda mejor a las tareas asociadas a los estímulos.
+\end{solution}
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+
+\noindent \textbf{Problema 4.} ¿En cuál año considera el artículo que se dio inicio a la era de la neurocomputación?
+
+\begin{solution}
+\cite{basheer2000artificial} establece que hay dos posibles inicios a la era de neurocomputación: en $1890$ con un documento de William James acerca de la actividad cerebral y en $1943$ con el famoso documento de McCulloh y Pitts sobre el poder de las redes neuronales para computar funciones lógicas y aritméticas.
+\end{solution}
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+
+\noindent \textbf{Problema 5.} ¿En cuál año se construyó el primer neurocomputador?
+\begin{solution}
+El primer neurocomputador fue el `SNARC' (Stochastic Neural Analog Reinforcement Calculator), construido por Marvin Minsky en 1951, en Princeton. Este contaba con 40 sinapsis hebbianas.
+\end{solution}
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+
+\noindent \textbf{Problema 6.} ¿En cuál año se considera que se construyó el primer hardware de redes neuronales y con qué propósito?
+\begin{solution}
+Frank Rosenblatt implementó un perceptrón en hardware en 1957 con el propósito de reconocimiento de imágenes.
+\end{solution}
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+
+\noindent \textbf{Problema 7.} A qué se refiere el artículo como los años `quietos'  y la investigación `quieta' (quiet) en el desarrollo de las redes neuronales y a qué se debieron?
+
+\begin{solution}
+Según el artículo, los años `quietos' hacen referencia a los años posteriores al documento de Minsky en 1969 acerca del perceptrón criticando las limitaciones del algoritmo (clasificación no-lineal). Para 1970, este documento logró su meta y los investigadores de las redes neuronales volvieron su atención a la inteligencia artificial (sistemas basados en reglas). 
+\end{solution}
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+
+\noindent \textbf{Problema 8.} Liste los eventos mencionados como más importantes en el renacimiento y revitalización de las redes neuronales.
+
+\begin{solution}
+Entre algunos de los eventos más importantes para la revitalización de las redes neuronales están:
+\begin{itemize}
+    \item[1.] Las redes de Hopfield en 1984.
+    \item[2.] Descubrimiento del algoritmo de aprendizaje de `backpropagation' en 1986.
+    \item[3.] Creación de la \textit{Conferencia Internaciones de la IEEE de Redes Neuronales Artificiales} en 1987.
+    \item[4.] Publicación de la \textit{Revista de Redes Neuronales} de la INNS.
+\end{itemize}
+\end{solution}
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+
+\noindent \textbf{Problema 9.} ¿Cuáles son las diferencias y las similitudes entre las redes neuronales y la estadística?
+
+\begin{solution}
+Algunos modelos de redes neuronales son bastante similares a modelos estadísticos, incluso pueden verse como generalizaciones de ellos, pues ambos modelos resulven muchos problemas en común.\\
+La diferencia entre estos modelos es la manera de solucionar los problemas, por ejemplo, en los modelos estadísticos usualmente se hacen suposiciones a priori sobre las variables mientras en redes neuronales los modelos dependen más de la estructura interna de la red neuronal. 
+\end{solution}
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+
+\noindent \textbf{Problema 10.} Explique por qué usar de métodos de redes neuronales en lugar de métodos de la estadística.
+\begin{solution}
+Las ventajas de redes usar neuronales sobre métodos estadísticos incluyen: la capacidad de trabajar con conjuntos de datos de alta dimensionalidad con mayor facilidad, la posibilidad de construir modelos que tengan relaciones no-lineales en el conjunto de datos, y la versatilidad y flexibilidad para aplicar diferentes tipos de redes neuronales, parámetros, y algoritmos de entrenamiento rápidamente.
+\end{solution}
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+ 
+ \noindent \textbf{Problema 11.} ¿Cuál es la diferencia entre los sistemas expertos y las redes neuronales artificiales?
+ 
+ \begin{solution}
+ La principal diferencia es que los sistemas expertos son sistemas que imitan el razonamiento humano basado en reglas que dicta un experto basado en conocimiento y experiencia y codificado con reglas de IF-THEN siendo muy sensibles a data `ruidosa' e incompleta; mientras que las redes neuronales artificiales son sistemas basados en el auto-aprendizaje de la máquina mediante un proceso de optimización. Otras diferencias son que los sistemas expertos funcionan secuencialmente y las redes neuronales paralelamente, el procesamiento de la información, entre otras. 
+ \end{solution}
+ \begin{flushright}
+$\blacksquare$
+\end{flushright}
+ 
+ \noindent \textbf{Problema 12.} ¿Cuándo usar redes neuronales y cuando sistemas expertos?
+ \begin{solution}
+ Dependiendo del problema, en particular la disponibilidad de datos y teoría del fenómeno subyacente. Mejores bases teóricas facilitan el diseño e implementación de sistemas expertos mientras la existencia de conjuntos de datos correspondientes al objeto de estudio hace viable el uso de redes neuronales.
+ \end{solution}
+ \begin{flushright}
+$\blacksquare$
+\end{flushright}
+ 
+ \noindent \textbf{Problema 13.} Las redes neuronales artificiales son más robustas y con frecuencia superan a otras herramientas computacionales para resolver una variedad de problemas en siete categorías. Cuáles son estas categorías y brevemente describa en qué consisten.
+ 
+ \begin{solution}
+ Las categorías son las siguientes:\\
+ \begin{itemize}
+     \item Clasificación de patrones: corresponde a la identificación de patrones para la asignación de los ejemplos a clases previamente establecidas
+     \item Agrupamiento: consiste en la formación de clases a partir de las similitudes o diferencias de patrones en los datos 
+     \item Aproximación de funciones: consiste en la construcción de funciones que aproximen la evaluación de reglas de salida a partir de unas entradas
+     \item Predicción (en series de tiempo): entrenar modelos que a partir de la observación de un suceso en una serie de tiempo sea capaz de predecir en el futuro el resultado del mismo suceso
+     \item Optimización: encontrar una solución que minimice o maximice una función sujeto a un conjunto de restricciones
+     \item Asociación: desarrollar patrones que sean robustos a datos corruptos o con ruido, es decir, que incluso con ruido se puedan identificar los patrones correctos del dato
+     \item Control: consiste en el entrenamiento de modelos que se adapten a partir de prueba y retroalimentación
+ \end{itemize}
+\end{solution}
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+ 
+ \noindent \textbf{Problema 14.} Mencione de qué manera se pueden clasificar las redes neuronales.
+
+\begin{solution}
+Las NNs se pueden clasificar en:
+\begin{itemize}
+    \item[1.] La función de la NN (predecir, segmentar, etc).
+    \item[2.] El grado de conectividad de las neuronas de la red (parcial o completa).
+    \item[3.] La dirección del flujo de la información de la red (recurrente o no recurrente), donde las redes recurrentes siendo sistemas dinámicos (el estado actual de la red depende de previos estados).
+    \item[4.] El tipo de algoritmo de aprendizaje, el cual representa un conjunto de ecuaciones que utilizan la salida de la red y una medida de `performance' para actualizar la estructura de la red.
+    \item[5.] La regla de aprendizaje (el `motor' del algoritmo de aprendizaje).
+    \item[6.] El grado de supervisión del aprendizaje para el entrenamiento, el cual varía dependiendo del problema (supervisado, por refuerzo, no supervisado, etc). 
+\end{itemize}
+\end{solution}
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+
+\noindent \textbf{Problema 15.} ¿En qué consiste una regla de aprendizaje y cuáles son los cuatro tipos de reglas básicas?
+
+\begin{solution}
+Una regla de aprendizaje define la manera en la que la red actualiza sus pesos a partir de la interacción con los estímulos.\\
+Los cuatro tipos de reglas básicas son:
+\begin{itemize}
+    \item Regla de corrección de error (ECL)
+    \item Regla de aprendizaje de Boltzmann (BL)
+    \item Regla de aprendizaje de Hebbian (HL)
+    \item Regla de aprendizaje competitivo (CL)
+\end{itemize}
+\end{solution}
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+
+\noindent \textbf{Problema 16.}  ¿Cuáles son las redes neuronales  más utilizadas (de acuerdo con el articulo) en el orden de su descubrimiento? Trate de identificar las diferencias entre ellas
+
+\begin{solution}
+Las redes más usadas son:
+\begin{itemize}
+    \item Redes de Hopfield
+    \item Redes ART (Adaptive Resonance theory)
+    \item Redes de Kohonen
+    \item Redes de retropropagación
+    \item Redes recurrentes
+    \item Redes de contrapropagación
+    \item Redes RBF (Radial basis function)
+\end{itemize}
+Alguna de estas redes son más propicias que otras para diferentes tareas. Sus diferencias radican en la arquitectura de conexión (recurrentes, no-recurrentes), sus algoritmos de entrenamiento (tipo de propagación), el concepto de capa de entrada y salida (pueden ser la misma capa), y el uso de diferentes funciones de activación.\\
+La elección del tipo de red depende de la definición y formulación del problema a resolver.
+\end{solution}
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+
+\noindent \textbf{Problema 17.} ¿En qué consiste el método de aprendizaje “feedforward error-backpropagation“?
+\begin{solution}
+La retropropagación se basa en la búsqueda de una superficie de error mínima en función de los pesos de la red neuronal. El mecanismo empleado para realizar esta búsqueda es es el gradiente descendente. Cada iteración de la retropropagación consiste de dos fases: 1. activación hacia adelante para producir una solución (evaluación de la red neuronal usando un ejemplo), y 2. propagación hacia atrás del error calculado para modificar los pesos.\\
+El paso de propagación hacia atrás del error calculado utiliza la regla delta modificada para establecer en cuánto debe cambiar cada uno de los pesos de las diferentes capas de la red. La magnitud y dirección de este cambio depende de la tasa de entrenamiento, el coeficiente de momento (el cual tiene en cuenta la actualización previa), y el gradiente entre cada par de capas sucesivas.\\
+\\ Partiendo del error calculado a partir de un ejemplo en la capa de salida, y avanzando hacia la capa de entrada, el cambio en el peso en cada conexión entre neurona depende del cambio de los pesos en la capa anterior. Esto es, la contribución de cada conexión en el error es tenida en cuenta para ajustar el peso correspondiente.
+\end{solution}
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+
+\noindent \textbf{Problema 18.} ¿Cuáles son las diversas fases en un proyecto de desarrollo de redes neuronales artificiales?
+\begin{solution}
+Según el artículo, un proyecto de desarrollo de redes neuronales consiste de seis fases iterativas a partir de la definición del problema:
+\begin{itemize}
+    \item Definición y formulación del problema: Entendimiento del problema y relaciones causa-efecto.
+    \item Diseño del sistema: Planteamiento tipo de red, regla de aprendizaje, conjunto de datos, esquema de validación.
+    \item Realización del sistema: Entrenamiento de la red neuronal, ajuste de parámetros (tamaño, tasa de aprendizaje, ciclos, error aceptable).
+    \item Verificación del sistema: Uso del conjunto de datos de validación.
+    \item Implementación del sistema: Instalación de la red neuronal en sistema de hardware/software adecuado para la aplicación y pruebas finales.
+    \item Mantenimiento del sistema: Actualización del sistema a partir de cambios en datos o ambiente de uso. Puede ser el inicio de un nuevo ciclo, iniciando con (2.) Diseño de sistema.
+\end{itemize}
+\end{solution}
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+
+\noindent \textbf{Problema 19.}  ¿Cuáles son los aspectos o problemas generales que se deben abordar antes de iniciar cualquier entrenamiento de una red neuronal?
+
+\begin{solution}
+Los principales problemas que se deben abordar antes del entrenamiento son:
+\begin{itemize}
+    \item[1.] Tamaño de la base de datos y particionamiento: El tamaño de la base debe ser suficientemente grande para captar toda la posible variabilidad del dominio del problema. Por otro lado, la base se debe partir en tres conjuntos: entrenamiento, test y validación.
+    \item[2.] Preprocesamiento de los datos, balanceo y enriquecimiento: Remover outliers, reducción dimensional, transformación de los datos. Balanceo de los datos sobre todo para clasificación.
+    \item[3.] Representación de la entrada y salida de la red: variables categóricas, imágenes, sonido, texto.
+    \item[5.] Inicialización de los pesos: Puede afectar la convergencia de la red.
+    \item[6.] Tasa de aprendizaje BP: Alta, acelera el entrenamiento (pero puede esquivar el mínimo global) y baja, es lenta pero se tiende a generar el alcance al mínimo global.
+    \item[7.] Coeficiente de Momento BP: Se usa al actualizar el peso y se usa para que se escape de mínimos locales (no globales). 
+    \item[8.] Función de transferencia o activación: Es necesaria para transformar la suma ponderada de pesos para señalar su \textit{intensidad}.  
+    \item[9.] El criterio de convergencia: Detiene el entrenamiento si el error (o medida de `performance') llega a cierto punto.
+    \item[10.] Número de ciclos de entrenamiento (épocas): Es importante para definir la cantidad de veces que se repite el proceso (y evitar overfitting o aprender de memoria). 
+    \item[11.] Tipo de Entrenamiento: Ejemplo a ejemplo, batch, etc. 
+    \item[12.] Tamaño de la(s) capa(s) escondida(s): una, dos, o tal vez más para problemas muy complejos. 
+    \item[13.] Optimización de parámetros: Selección de los parámetros como nodos, capas, neuronas en cada capa, tasa de aprendizaje, etc.
+\end{itemize}
+\end{solution}
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+
+\noindent \textbf{Problema 20.} ¿Cuáles son las características de las redes neuronales artificiales que ha dado lugar a su creciente utilización?
+\begin{solution}
+\begin{itemize}
+    \item Capacidad para aprender de ejemplos.
+    \item Metodología general para desarrollar proyectos de NNs.
+    \item Habilidad para reconocer y aprender relaciones subyacentes.
+    \item Alta tolerancia al ruido y errores de medición.
+    \item Disponibilidad de implementaciones.
+    \item Avances en capacidad de procesamiento computacional.
+    \item Disponibilidad de conjuntos de datos debido a avances en automatización y conectividad.
+\end{itemize}
+\end{solution}
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+
+%Ejercicios
+%Corredor: 19 11 7 8 14 4 2
+%Pino: 12 17 5 6 10 18
+%Castellanos: 20 13 3 15 16 9
+
+%References
+\newpage
+\bibliographystyle{apalike}
+\bibliography{ReferencesHwk-2.bib}
+\end{document}
