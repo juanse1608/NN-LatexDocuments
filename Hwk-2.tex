@@ -306,10 +306,11 @@ La elección del tipo de red depende de la definición y formulación del proble
 \begin{flushright}
 $\blacksquare$
 \end{flushright}
-
+\newpage
 \noindent \textbf{Problema 17.} ¿En qué consiste el método de aprendizaje “feedforward error-backpropagation“?
 \begin{solution}
 La retropropagación se basa en la búsqueda de una superficie de error mínima en función de los pesos de la red neuronal. El mecanismo empleado para realizar esta búsqueda es es el gradiente descendente. Cada iteración de la retropropagación consiste de dos fases: 1. activación hacia adelante para producir una solución (evaluación de la red neuronal usando un ejemplo), y 2. propagación hacia atrás del error calculado para modificar los pesos.\\
+\\
 El paso de propagación hacia atrás del error calculado utiliza la regla delta modificada para establecer en cuánto debe cambiar cada uno de los pesos de las diferentes capas de la red. La magnitud y dirección de este cambio depende de la tasa de entrenamiento, el coeficiente de momento (el cual tiene en cuenta la actualización previa), y el gradiente entre cada par de capas sucesivas.\\
 \\ Partiendo del error calculado a partir de un ejemplo en la capa de salida, y avanzando hacia la capa de entrada, el cambio en el peso en cada conexión entre neurona depende del cambio de los pesos en la capa anterior. Esto es, la contribución de cada conexión en el error es tenida en cuenta para ajustar el peso correspondiente.
 \end{solution}
